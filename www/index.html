@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>S2Velocity説明書</title>
+  <title>S2Velocity</title>
   <link href="style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
@@ -9,16 +9,20 @@
 
 <h1>S2Velocity</h1>
 
-<div class="author">
-  $Author$<br>
-  $Date$<br>
-  $Revision$
-</div>
+<p>
+  Velocity Viewにおいて、Velocity Toolをコンテナ管理するためのツールです。
+  toolbox.xmlにクラスを登録するだけで、コンテナによって自動的に依存性注入が行なわれます。
+</p>
+
+<p>
+  S2Velocityを使えば、View技術にVelocityを用いた際のViewHelperパターンの利用法の幅を、
+  大幅に広げることができるでしょう。
+</p>
 
 <hr>
 
 <ul>
-  <li><a href="#overview">概要</a></li>
+  <li><a href="#download">ダウンロード</a></li>
   <li>
     <a href="#usage">使い方</a>
     <ul>
@@ -31,17 +35,20 @@
 
 <hr>
 
-<a name="overview">
-<h3>概要</h3>
+<a name="download">
+<h3>ダウンロード</h3>
 
 <p>
-  Velocity Viewにおいて、Velocity Toolをコンテナ管理するためのツールです。
-  toolbox.xmlにクラスを登録するだけで、コンテナによって自動的に依存性注入が行なわれます。
-</p>
-
-<p>
-  S2Velocityを使えば、View技術にVelocityを用いた際のViewHelperパターンの利用法の幅を、
-  大幅に広げることができるでしょう。
+  リリースされているバイナリは、以下の通りです。すべてeclipse3.xプロジェクトのアーカイブに
+  なっており、その中に入っているs2velocity-x.x.x.jarがS2Velocity本体です。
+  <ul>
+    <li><a href="downloads/s2velocity-1.1.zip">s2velocity-1.1.zip</a> （Seasar2.3、Velocity Tools1.2以降に対応）</li>
+    <li><a href="downloads/s2velocity-1.0.1.zip">s2velocity-1.0.1.zip</a> （Seasar2.2、Velocity Tools1.1まで対応）</li>
+  </ul>
+  また、サンプルプロジェクトのアーカイブも以下に用意されています。
+  <ul>
+    <li><a href="downloads/s2velocity-example.zip">s2velocity-example.zip</a></li>
+  </ul>
 </p>
 
 <a name="usage">
@@ -143,7 +150,7 @@ $sampleTool.string とVelocityは言う
 </pre>
 
 <div class="label">sample.vmの表示結果</div>
-<img src="sample_vm.jpg">
+<img src="img/sample_vm.jpg">
 
 <a name="instance_management">
 <h3>View Toolのインスタンス管理</h3>
