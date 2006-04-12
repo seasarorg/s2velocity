@@ -1,0 +1,20 @@
+<html>
+<body>
+$sampleTool.string と Velocity は言う<br>
+<hr>
+プルダウンメニューの項目をDBから取って来られる。
+<form>
+  <select>
+    <option selected>---</option>
+    #foreach($item in $itemTool.items)
+      <option value="$item">$item</option>
+    #end
+  </select>
+</form>
+<hr>
+toolbox.xmlで指定したスコープで、コンテナ管理される。<br>
+request: $requestCountTool.count() （常に1のままのはず）<br>
+session: $sessionCountTool.count() （ブラウザを再起動すると1に戻る）<br>
+application: $appCountTool.count() （アプリケーションを再読込するまでカウントが上昇）<br>
+</body>
+</html>
