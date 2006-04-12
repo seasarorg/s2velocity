@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<toolbox>
+  <tool>
+    <key>sampleTool</key>
+    <scope>request</scope>
+    <class>org.seasar.velocity.tools.examples.hello.SampleTool</class>
+  </tool>
+  <tool>
+    <key>itemTool</key>
+    <scope>request</scope>
+    <class>org.seasar.velocity.tools.examples.dao.ItemTool</class>
+  </tool>
+  <tool>
+  	<key>requestCountTool</key>
+  	<scope>request</scope>
+  	<class>org.seasar.velocity.tools.examples.scope.CountTool</class>
+  </tool>
+  <tool>
+  	<key>sessionCountTool</key>
+  	<scope>session</scope>
+  	<class>org.seasar.velocity.tools.examples.scope.CountTool</class>
+  </tool>
+  <tool>
+  	<key>appCountTool</key>
+    <scope>application</scope>
+  	<class>org.seasar.velocity.tools.examples.scope.CountTool</class>
+  </tool>
+</toolbox>

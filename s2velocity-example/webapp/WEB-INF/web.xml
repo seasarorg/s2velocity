@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 
+  2.3//EN" "http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
+<web-app>
+	<display-name>s2velocity example</display-name>
+  
+  <servlet>
+    <servlet-name>s2servlet</servlet-name>
+    <servlet-class>org.seasar.framework.container.servlet.S2ContainerServlet</servlet-class>
+    <init-param>
+      <param-name>configPath</param-name>
+      <param-value>app.dicon</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <!-- Velocity Struts -->
+  <servlet>
+    <servlet-name>velocity</servlet-name>
+    <!-- <servlet-class>org.apache.velocity.tools.view.servlet.VelocityViewServlet</servlet-class> -->
+    <servlet-class>org.seasar.velocity.tools.S2VelocityViewServlet</servlet-class>
+    <init-param>
+      <param-name>org.apache.velocity.toolbox</param-name>
+      <param-value>/WEB-INF/velocity-toolbox.xml</param-value>
+    </init-param>
+    <init-param>
+      <param-name>org.apache.velocity.properties</param-name>
+      <param-value>/WEB-INF/velocity.properties</param-value>
+    </init-param>
+    <load-on-startup>10</load-on-startup>
+  </servlet>
+  
+  <!-- Seasar2 Container -->
+  <servlet-mapping>
+    <servlet-name>s2servlet</servlet-name>
+    <url-pattern>/s2servlet</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Velocity -->
+  <servlet-mapping>
+    <servlet-name>velocity</servlet-name>
+    <url-pattern>*.vm</url-pattern>
+  </servlet-mapping>
+
+</web-app>
