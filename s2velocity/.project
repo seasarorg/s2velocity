@@ -1,0 +1,19 @@
+<projectDescription>
+  <name>s2-velocity</name>
+  <comment>Seasar2 Velocity extension</comment>
+  <projects/>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+      <arguments/>
+    </buildCommand>
+    <buildCommand>
+      <name>net.sourceforge.metrics.builder</name>
+      <arguments/>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>net.sourceforge.metrics.nature</nature>
+  </natures>
+</projectDescription>
