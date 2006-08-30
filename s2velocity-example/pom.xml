@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><project>
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.velocity</groupId>
   <artifactId>s2-velocity-example</artifactId>
   <version>1.0</version>
+  <packaging>war</packaging>
   <description>S2Velocity example</description>
   <inceptionYear>2004</inceptionYear>
   <developers>
@@ -33,11 +35,14 @@
       <url>http://maven.seasar.org/maven2</url>
     </repository>
   </repositories>
+  <build>
+    <outputDirectory>webapp/WEB-INF/classes</outputDirectory>
+  </build>
   <dependencies>
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-framework</artifactId>
-      <version>2.3.4</version>
+      <version>2.4.0-rc-1</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
