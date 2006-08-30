@@ -18,6 +18,13 @@
       <organization>Ouobpo</organization>
       <timezone>+9</timezone>
     </developer>
+    <developer>
+      <id>tanigon</id>
+      <name>TANIGUCHI, Hikaru</name>
+      <email>tanigon@tanigon.godhand.com</email>
+      <url>http://d.hatena.ne.jp/tanigon/</url>
+      <timezone>+9</timezone>
+    </developer>
   </developers>
   <licenses>
     <license>
