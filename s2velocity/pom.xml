@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.velocity</groupId>
   <artifactId>s2-velocity</artifactId>
+  <packaging>jar</packaging>
   <version>1.1</version>
   <description>Seasar2 Velocity extension</description>
   <inceptionYear>2004</inceptionYear>
@@ -37,6 +37,14 @@
       <url>http://maven.seasar.org/maven2</url>
     </repository>
   </repositories>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Repository</name>
+      <url>scp://maven.seasar.org/home/groups/maven/public_html/maven2</url>
+    </repository>
+  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>org.seasar.container</groupId>
@@ -44,9 +52,9 @@
       <version>2.3.4</version>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.4</version>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-servlet_2.4_spec</artifactId>
+      <version>1.0</version>
     </dependency>
     <dependency>
       <groupId>commons-digester</groupId>

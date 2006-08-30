@@ -2,15 +2,15 @@
   <classpathentry kind="src" path="src/main/java"/>
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="var" path="M2_REPO/javassist/javassist/3.0/javassist-3.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0/commons-logging-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javassist/javassist/3.0/javassist-3.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar" sourcepath="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar" sourcepath="M2_REPO/junit/junit/3.8.1/junit-3.8.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/velocity/velocity-dep/1.4/velocity-dep-1.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/seasar/container/s2-framework/2.3.4/s2-framework-2.3.4.jar"/>
-  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar" sourcepath="M2_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/2.1/commons-collections-2.1.jar" sourcepath="M2_REPO/commons-collections/commons-collections/2.1/commons-collections-2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/velocity-tools/velocity-tools/1.2/velocity-tools-1.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/geronimo/specs/geronimo-servlet_2.4_spec/1.0/geronimo-servlet_2.4_spec-1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/velocity/velocity/1.4/velocity-1.4.jar" sourcepath="M2_REPO/velocity/velocity/1.4/velocity-1.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ognl/ognl/2.6.5/ognl-2.6.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.6/commons-beanutils-1.6.jar"/>
