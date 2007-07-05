@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2004-2007 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.velocity.tools.view.ToolInfo;
 import org.apache.velocity.tools.view.ToolboxManager;
-import org.apache.velocity.tools.view.context.ToolboxContext;
 import org.apache.velocity.tools.view.context.ViewContext;
 import org.apache.velocity.tools.view.tools.ViewTool;
 import org.seasar.framework.container.ComponentDef;
@@ -99,14 +98,6 @@ public class ContainerBasedToolboxManager implements ToolboxManager {
 
 	protected S2Container getToolboxContainer() {
 		return (S2Container) SingletonS2ContainerFactory.getContainer().getComponent(toolboxNamespace);
-	}
-
-	/**
-	 * @deprecated
-	 * @see org.apache.velocity.tools.view.ToolboxManager#getToolboxContext(java.lang.Object)
-	 */
-	public ToolboxContext getToolboxContext(Object initData) {
-		return new ToolboxContext( getToolbox(initData) );
 	}
 
 	protected Object assembleSessionTool(Object initData, ViewContext ctx,

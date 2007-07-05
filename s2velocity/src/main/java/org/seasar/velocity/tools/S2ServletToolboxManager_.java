@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2005 the Seasar Foundation and the Others.
+ * Copyright 2004-2007 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import javax.servlet.ServletContext;
 import org.apache.commons.digester.RuleSet;
 import org.apache.velocity.tools.view.ToolInfo;
 import org.apache.velocity.tools.view.XMLToolboxManager;
-import org.apache.velocity.tools.view.context.ToolboxContext;
 import org.apache.velocity.tools.view.servlet.ServletToolboxManager;
 
 // TODO 委譲バージョンのS2ServletToolboxManagerを作る
@@ -76,9 +75,5 @@ public class S2ServletToolboxManager_ extends XMLToolboxManager {
 
     public void addTool(ToolInfo info) {
         fManager.addTool(info);
-    }
-
-    public ToolboxContext getToolboxContext(Object initData) {
-        return fManager.getToolboxContext(initData);
     }
 }
