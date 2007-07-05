@@ -15,6 +15,7 @@
  */
 package org.seasar.velocity.tools;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +24,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.velocity.tools.view.ToolInfo;
 import org.apache.velocity.tools.view.ToolboxManager;
 import org.apache.velocity.tools.view.context.ViewContext;
-import org.apache.velocity.tools.view.tools.ViewTool;
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.InstanceDef;
 import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.deployer.InstancePrototypeDef;
 import org.seasar.framework.container.deployer.InstanceRequestDef;
 import org.seasar.framework.container.deployer.InstanceSessionDef;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
@@ -83,18 +86,34 @@ public class ContainerBasedToolboxManager implements ToolboxManager {
 				component = assembleSessionTool(initData, ctx, def);
 			} else {
 				component = def.getComponent();
-				if (instanceDef instanceof InstanceRequestDef) {
-					if (component instanceof ViewTool) {
-						((ViewTool) component).init(initData);
-					}
+				if (instanceDef instanceof InstanceRequestDef ||
+                        instanceDef instanceof InstancePrototypeDef) {
+                    initViewToolComponent(initData, component);
 				}
 			}
-
+            
 			toolbox.put(def.getComponentName(), component);
 		}
 		
 		return toolbox;
 	}
+
+    /**
+     * initialize component which is (former) ViewTool style.
+     * @param initData initData, assumed as ViewContext
+     * @param component destination object
+     */
+    protected void initViewToolComponent(Object initData, Object component) {
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component.getClass());
+        try {
+            Method method = beanDesc.getMethod("init", new Class[] { Object.class } );
+            if (method != null) {
+                method.invoke(component, initData);
+            }
+        } catch (Exception e) {
+            // this case is normally expected
+        }
+    }
 
 	protected S2Container getToolboxContainer() {
 		return (S2Container) SingletonS2ContainerFactory.getContainer().getComponent(toolboxNamespace);
@@ -110,9 +129,7 @@ public class ContainerBasedToolboxManager implements ToolboxManager {
 		}
 		if (component == null) {
 			component = def.getComponent();
-			if (component instanceof ViewTool) {
-				((ViewTool) component).init(initData);
-			}
+            initViewToolComponent(initData, component);
 		}
 
 		return component;
