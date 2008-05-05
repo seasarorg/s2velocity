@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.velocity.Template;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.view.ToolboxManager;
 import org.apache.velocity.tools.view.servlet.VelocityViewServlet;
@@ -69,7 +68,7 @@ public class S2VelocityViewServlet extends VelocityViewServlet {
         /* if we have a toolbox, get a manager for it */
         if (file != null) {
             if (TOOLBOX_KEY_CONTAINER_MANAGED.equals(file)) {
-                getVelocityEngine().info("S2VelocityViewServlet: trying to init ContainerBasedToolboxManager");
+                getVelocityEngine().getLog().info("S2VelocityViewServlet: trying to init ContainerBasedToolboxManager");
                 initContainerBasedToolboxManager();
             } else {
                 toolboxManager = S2ServletToolboxManager.getInstance(getServletContext(), file); // NOTE
@@ -77,7 +76,7 @@ public class S2VelocityViewServlet extends VelocityViewServlet {
                                                                                                     // here.
             }
         } else {
-            getVelocityEngine().info("VelocityViewServlet: No toolbox entry in configuration.");
+            getVelocityEngine().getLog().info("VelocityViewServlet: No toolbox entry in configuration.");
         }
     }
 
@@ -86,13 +85,13 @@ public class S2VelocityViewServlet extends VelocityViewServlet {
         if (container != null) {
             try {
                 toolboxManager = (ToolboxManager) container.getComponent(ToolboxManager.class);
-                getVelocityEngine().info("S2VelocityViewServlet: Toolbox found in S2Container");
+                getVelocityEngine().getLog().info("S2VelocityViewServlet: Toolbox found in S2Container");
             } catch (ComponentNotFoundRuntimeException e) {
                 toolboxManager = new ContainerBasedToolboxManager();
-                getVelocityEngine().info("S2VelocityViewServlet: Toolbox not found in S2Container, using default ContainerBasedToolboxManager.");
+                getVelocityEngine().getLog().info("S2VelocityViewServlet: Toolbox not found in S2Container, using default ContainerBasedToolboxManager.");
             }
         } else {
-            getVelocityEngine().error("S2VelocityViewServlet: no container found but container managed specified.");
+            getVelocityEngine().getLog().error("S2VelocityViewServlet: no container found but container managed specified.");
         }
     }
 
