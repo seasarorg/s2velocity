@@ -1,0 +1,18 @@
+ ----
+Usage
+ ----
+TANIGUCHI Hikaru
+ -----
+3 October 2006
+ -----
+
+使用方法
+
+  <<<web.xml>>>を次のように設定してください。
+
+
+------
+test
+  ...
+</project>
+------
