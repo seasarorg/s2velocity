@@ -84,7 +84,7 @@
 			<configuration>
 				<outputEncoding>UTF-8</outputEncoding>
 				<inputEncoding>UTF-8</inputEncoding>
-				<locales>ja</locales>
+				<locales>ja,en</locales>
 			</configuration>
 		</plugin>      
 	</plugins>
