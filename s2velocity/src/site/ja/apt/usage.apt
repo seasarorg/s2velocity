@@ -23,6 +23,8 @@ test
   
   * parameterタグが使えません. toolbox.xmlで表記するのではなく S2Containerへのコンポーネント登録時に設定を追加してください
   
+  * toolbox.xmlを使わないコンテナベース管理の場合には velocityTools標準の applicationスコープのようなinit挙動はしません
+  
   TODO: toolbox.xmlの例と diconの例を載せたら親切
 
 拡張点

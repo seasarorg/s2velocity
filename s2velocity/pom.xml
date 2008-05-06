@@ -43,6 +43,13 @@
     </repository>
   </repositories>
   
+  <scm>
+    <connection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</connection>
+    <developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</developerConnection>
+    <url>http://svn.seasar.org/browse/?root=sandbox.s2velocity</url>  
+  </scm>
+  
+  
   <build>
   	<plugins>
       <plugin>
