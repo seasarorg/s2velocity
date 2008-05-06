@@ -26,6 +26,9 @@ import org.apache.velocity.tools.view.XMLToolboxManager;
 import org.apache.velocity.tools.view.servlet.ServletToolboxManager;
 
 // TODO 委譲バージョンのS2ServletToolboxManagerを作る
+/*
+ * @deprecated
+ */
 public class S2ServletToolboxManager_ extends XMLToolboxManager {
 
     private static Map            managerWrappersMap = new HashMap();

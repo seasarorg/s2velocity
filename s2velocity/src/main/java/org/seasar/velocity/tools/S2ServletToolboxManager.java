@@ -1,17 +1,22 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 
 
@@ -37,6 +42,7 @@ import org.apache.velocity.tools.view.XMLToolboxManager;
 import org.apache.velocity.tools.view.context.ViewContext;
 import org.apache.velocity.tools.view.servlet.ServletToolInfo;
 import org.apache.velocity.tools.view.servlet.ServletToolboxManager;
+import org.apache.velocity.tools.view.servlet.ServletUtils;
 
 
 /**
@@ -54,15 +60,15 @@ import org.apache.velocity.tools.view.servlet.ServletToolboxManager;
  *     to be used as a view tool</li>
  *   <li>supports adding primitive data values to the context(String,Number,Boolean)</li>
  * </ul>
- * 
+ *
  *
  * <p><strong>Configuration</strong></p>
  * <p>The toolbox manager is configured through an XML-based configuration
  * file. The configuration file is passed to the {@link #load(java.io.InputStream input)}
  * method. The format is shown in the following example:</p>
- * <pre> 
+ * <pre>
  * &lt;?xml version="1.0"?&gt;
- * 
+ *
  * &lt;toolbox&gt;
  *   &lt;tool&gt;
  *      &lt;key&gt;link&lt;/key&gt;
@@ -83,24 +89,23 @@ import org.apache.velocity.tools.view.servlet.ServletToolboxManager;
  *      &lt;value&gt;Hello World!&lt;/value&gt;
  *   &lt;/data&gt;
  *   &lt;xhtml&gt;true&lt;/xhtml&gt;
- * &lt;/toolbox&gt;    
+ * &lt;/toolbox&gt;
  * </pre>
  * <p>The recommended location for the configuration file is the WEB-INF directory of the
  * web application.</p>
  *
  * @author <a href="mailto:sidler@teamup.com">Gabriel Sidler</a>
- * @author <a href="mailto:nathan@esha.com">Nathan Bubna</a>
+ * @author Nathan Bubna
  * @author <a href="mailto:geirm@apache.org">Geir Magnusson Jr.</a>
  * @author <a href="mailto:henning@schmiedehausen.org">Henning P. Schmiedehausen</a>
- * @author <a href="mailto:sato@ouobpo.org">Sato Tadayosi</a>
- * @version $Id: ServletToolboxManager.java 321256 2005-10-15 00:02:37Z nbubna $
+ * @version $Id: ServletToolboxManager.java 488460 2006-12-19 00:00:35Z nbubna $
  */
 public class S2ServletToolboxManager extends XMLToolboxManager
 {
 
     // --------------------------------------------------- Properties ---------
 
-    public static final String SESSION_TOOLS_KEY = 
+    public static final String SESSION_TOOLS_KEY =
         ServletToolboxManager.class.getName() + ":session-tools";
 
     protected static final Log LOG = LogFactory.getLog(ServletToolboxManager.class);
@@ -149,12 +154,12 @@ public class S2ServletToolboxManager extends XMLToolboxManager
             toolboxFile = "/" + toolboxFile;
         }
 
-        // get config file pathname
-        String pathname = servletContext.getRealPath(toolboxFile);
+        // get the unique key for this toolbox file in this servlet context
+        String uniqueKey = servletContext.hashCode() + ':' + toolboxFile;
 
         // check if a previous instance exists
         S2ServletToolboxManager toolboxManager = 
-            (S2ServletToolboxManager)managersMap.get(pathname);
+            (S2ServletToolboxManager)managersMap.get(uniqueKey);
 
         if (toolboxManager == null)
         {
@@ -167,26 +172,24 @@ public class S2ServletToolboxManager extends XMLToolboxManager
 
                 if (is != null)
                 {
-                    LOG.info("Using config file '" + toolboxFile +"'");
+                    LOG.info("Using config file '" + toolboxFile + "'");
 
                     toolboxManager = new S2ServletToolboxManager(servletContext);
                     toolboxManager.load(is);
 
                     // remember it
-                    managersMap.put(pathname, toolboxManager);
+                    managersMap.put(uniqueKey, toolboxManager);
 
-                    LOG.info("Toolbox setup complete.");
+                    LOG.debug("Toolbox setup complete.");
+                }
+                else
+                {
+                    LOG.debug("No toolbox was found at '" + toolboxFile + "'");
                 }
             }
             catch(Exception e)
             {
-                LOG.error("Problem loading toolbox '" + toolboxFile +"' : " + e);
-
-                // if this happens, it probably deserves
-                // to have the stack trace logged
-                StringWriter sw = new StringWriter();
-                e.printStackTrace(new PrintWriter(sw));
-                LOG.error(sw.toString());
+                LOG.error("Problem loading toolbox '" + toolboxFile + "'", e);
             }
             finally
             {
@@ -209,13 +212,13 @@ public class S2ServletToolboxManager extends XMLToolboxManager
      * current request and session-scoped tools have been defined for this
      * toolbox.</p>
      *
-     * <p>If true, then a call to {@link #getToolboxContext(Object)} will 
+     * <p>If true, then a call to {@link #getToolbox(Object)} will
      * create a new session if none currently exists for this request and
      * the toolbox has one or more session-scoped tools designed.</p>
      *
-     * <p>If false, then a call to getToolboxContext(Object) will never
+     * <p>If false, then a call to getToolbox(Object) will never
      * create a new session for the current request.
-     * This effectively means that no session-scoped tools will be added to 
+     * This effectively means that no session-scoped tools will be added to
      * the ToolboxContext for a request that does not have a session object.
      * </p>
      *
@@ -229,7 +232,7 @@ public class S2ServletToolboxManager extends XMLToolboxManager
 
 
     /**
-     * <p>Sets an application attribute to tell velocimacros and tools 
+     * <p>Sets an application attribute to tell velocimacros and tools
      * (especially the LinkTool) whether they should output XHTML or HTML.</p>
      *
      * @see ViewContext#XHTML
@@ -273,10 +276,37 @@ public class S2ServletToolboxManager extends XMLToolboxManager
         return servletRuleSet;
     }
 
+    /**
+     * Ensures that application-scoped tools do not have request path
+     * restrictions set for them, as those will not be enforced.
+     *
+     * @param info a ToolInfo object
+     * @return true if the ToolInfo is valid
+     * @since VelocityTools 1.3
+     */
+    protected boolean validateToolInfo(ToolInfo info)
+    {
+        if (!super.validateToolInfo(info))
+        {
+            return false;
+        }
+        if (info instanceof ServletToolInfo)
+        {
+            ServletToolInfo sti = (ServletToolInfo)info;
+            if (sti.getRequestPath() != null &&
+                !ViewContext.REQUEST.equalsIgnoreCase(sti.getScope()))
+            {
+                LOG.error(sti.getKey() + " must be a request-scoped tool to have a request path restriction!");
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Overrides XMLToolboxManager to separate tools by scope.
-     * For this to work, we obviously override getToolboxContext(Object) as well.
+     * For this to work, we obviously override getToolbox(Object) as well.
      */
     public void addTool(ToolInfo info)
     {
@@ -285,7 +315,7 @@ public class S2ServletToolboxManager extends XMLToolboxManager
             if (info instanceof ServletToolInfo)
             {
                 ServletToolInfo sti = (ServletToolInfo)info;
-                
+
                 if (ViewContext.REQUEST.equalsIgnoreCase(sti.getScope()))
                 {
                     requestToolInfo.add(sti);
@@ -305,7 +335,7 @@ public class S2ServletToolboxManager extends XMLToolboxManager
                 }
                 else
                 {
-                    LOG.warn("Unknown scope '" + sti.getScope() + "' - " + 
+                    LOG.warn("Unknown scope '" + sti.getScope() + "' - " +
                             sti.getKey() + " will be request scoped.");
 
                     //default is request scope
@@ -339,14 +369,15 @@ public class S2ServletToolboxManager extends XMLToolboxManager
      * Session scope tools are initialized once per session and stored in a
      * map in the session attributes.
      * Request scope tools are initialized on every request.
-     * 
+     *
      * @param initData the {@link ViewContext} for the current servlet request
      */
     public Map getToolbox(Object initData)
     {
         //we know the initData is a ViewContext
         ViewContext ctx = (ViewContext)initData;
-        
+        String requestPath = ServletUtils.getPath(ctx.getRequest());
+
         //create the toolbox map with the application tools in it
         Map toolbox = new HashMap(appTools);
 
@@ -367,8 +398,8 @@ public class S2ServletToolboxManager extends XMLToolboxManager
                         Iterator i = sessionToolInfo.iterator();
                         while(i.hasNext())
                         {
-                            ToolInfo ti = (ToolInfo)i.next();
-                            stmap.put(ti.getKey(), ti.getInstance(ctx));
+                            ServletToolInfo sti = (ServletToolInfo)i.next();
+                            stmap.put(sti.getKey(), sti.getInstance(ctx));
                         }
                         session.setAttribute(SESSION_TOOLS_KEY, stmap);
                     }
@@ -383,6 +414,14 @@ public class S2ServletToolboxManager extends XMLToolboxManager
         while(i.hasNext())
         {
             ToolInfo info = (ToolInfo)i.next();
+            if (info instanceof ServletToolInfo)
+            {
+                ServletToolInfo sti = (ServletToolInfo)info;
+                if (!sti.allowsRequestPath(requestPath))
+                {
+                    continue;
+                }
+            }
             toolbox.put(info.getKey(), info.getInstance(ctx));
         }
 
@@ -391,7 +430,7 @@ public class S2ServletToolboxManager extends XMLToolboxManager
 
 
     /**
-     * Returns a mutex (lock object) unique to the specified session 
+     * Returns a mutex (lock object) unique to the specified session
      * to allow for reliable synchronization on the session.
      */
     protected Object getMutex(HttpSession session)

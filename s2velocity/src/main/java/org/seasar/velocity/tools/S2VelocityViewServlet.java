@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package org.seasar.velocity.tools;
 
+import java.io.StringWriter;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.tools.view.ToolboxManager;
+import org.apache.velocity.tools.view.servlet.VelocityLayoutServlet;
 import org.apache.velocity.tools.view.servlet.VelocityViewServlet;
 import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.S2Container;
@@ -64,23 +68,35 @@ public class S2VelocityViewServlet extends VelocityViewServlet {
     protected void initToolbox(ServletConfig config) throws ServletException {
         /* check the servlet config and context for a toolbox param */
         String file = findInitParameter(config, TOOLBOX_KEY);
-
+        if (file == null)
+        {
+            // ok, look in the default location
+            file = DEFAULT_TOOLBOX_PATH;
+            getVelocityEngine().getLog().debug("S2VelocityViewServlet: No toolbox entry in configuration."
+                           + " Looking for '" + DEFAULT_TOOLBOX_PATH + "'");
+        }
+        
         /* if we have a toolbox, get a manager for it */
-        if (file != null) {
-            if (TOOLBOX_KEY_CONTAINER_MANAGED.equals(file)) {
-                getVelocityEngine().getLog().info("S2VelocityViewServlet: trying to init ContainerBasedToolboxManager");
-                initContainerBasedToolboxManager();
-            } else {
-                toolboxManager = S2ServletToolboxManager.getInstance(getServletContext(), file); // NOTE
-                                                                                                    // changed
-                                                                                                    // here.
-            }
+        if (TOOLBOX_KEY_CONTAINER_MANAGED.equals(file)) {
+            getVelocityEngine().getLog().info("S2VelocityViewServlet: trying to init ContainerBasedToolboxManager");
+            toolboxManager = initContainerBasedToolboxManager();
         } else {
-            getVelocityEngine().getLog().info("VelocityViewServlet: No toolbox entry in configuration.");
+            toolboxManager = S2ServletToolboxManager.getInstance(getServletContext(), file); 
         }
     }
 
-    protected void initContainerBasedToolboxManager() {
+    /**
+     * create and return {@link ToolboxManager} instance.
+     * If {@link S2Container} has a component with ToolboxManager.class, get component and returns it. 
+     * If not, default {@link ContainerBasedToolboxManager} is instantiated and returns it.
+     * 
+     * @return appropriate toolbox manager instance. returns null if no s2container found.
+     * 
+     * @author TANIGUCHI Hikaru
+     */
+    protected ToolboxManager initContainerBasedToolboxManager() {
+    	ToolboxManager toolboxManager;
+    	
         S2Container container = SingletonS2ContainerFactory.getContainer();
         if (container != null) {
             try {
@@ -91,8 +107,11 @@ public class S2VelocityViewServlet extends VelocityViewServlet {
                 getVelocityEngine().getLog().info("S2VelocityViewServlet: Toolbox not found in S2Container, using default ContainerBasedToolboxManager.");
             }
         } else {
+        	toolboxManager = null;
             getVelocityEngine().getLog().error("S2VelocityViewServlet: no container found but container managed specified.");
         }
+        
+        return toolboxManager;
     }
 
     protected void error(HttpServletRequest request, HttpServletResponse response, Exception e)
@@ -105,12 +124,32 @@ public class S2VelocityViewServlet extends VelocityViewServlet {
             // get a velocity context
             Context ctx = createContext(request, response);
 
+            Throwable cause = e;
+
+            // if it's an MIE, i want the real cause and stack trace!
+            if (cause instanceof MethodInvocationException)
+            {
+                // put the invocation exception in the context
+                ctx.put(VelocityLayoutServlet.KEY_ERROR_INVOCATION_EXCEPTION, e);
+                // get the real cause
+                cause = ((MethodInvocationException)e).getWrappedThrowable();
+            }
+
+            // add the cause to the context
+            ctx.put(VelocityLayoutServlet.KEY_ERROR_CAUSE, cause);
+
+            // grab the cause's stack trace and put it in the context
+            StringWriter sw = new StringWriter();
+            cause.printStackTrace(new java.io.PrintWriter(sw));
+            ctx.put(VelocityLayoutServlet.KEY_ERROR_STACKTRACE, sw.toString());
+
             // retrieve and render the error template
             Template et = getTemplate(errorTemplate);
             mergeTemplate(et, ctx, response);
-
         } catch (Exception e2) {
-            // then punt the original to a higher authority
+            getVelocityEngine().getLog().error("S2VelocityViewServlet: Error during error template rendering", e2);
+
+        	// then punt the original to a higher authority
             super.error(request, response, e);
         }
     }

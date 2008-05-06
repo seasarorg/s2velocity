@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,30 @@
  */
 package org.seasar.velocity.tools;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.tools.view.ToolInfo;
 import org.apache.velocity.tools.view.ViewToolInfo;
 import org.apache.velocity.tools.view.servlet.ServletToolInfo;
-import org.apache.velocity.tools.view.tools.ViewTool;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.ClassUtil;
 
 /**
  * @author <a href="mailto:sato@ouobpo.org">Sato Tadayosi</a>
+ * @author tanigon
  * 
  * @version $Id: S2ServletToolInfo.java,v 1.4 2004/11/27 06:38:45 sato Exp $
  */
 public class S2ServletToolInfo extends ServletToolInfo {
-
+    protected static final Log LOG = LogFactory.getLog(S2ServletToolInfo.class);
+    
+	private String key;
     protected Class   clazz;
-    protected boolean initializable = false;
+    private Method init = null;
 
     /**
      * Overrides {@link ViewTool}.
@@ -44,10 +52,25 @@ public class S2ServletToolInfo extends ServletToolInfo {
 
         Object tool = createToolInstance();
 
-        if (initializable) {
-            ((ViewTool) tool).init(initData);
+        // NOTE: this version has no "configure" behavior. user should manage initialization with S2Container&dicon
+        
+        /* if the tool is initializable... */
+        if (init != null)
+        {
+            try
+            {
+                // call the init method on the instance
+                init.invoke(tool, new Object[]{ initData });
+            }
+            catch (IllegalAccessException iae)
+            {
+                LOG.error("Exception when calling init(Object) on "+tool, iae);
+            }
+            catch (InvocationTargetException ite)
+            {
+                LOG.error("Exception when calling init(Object) on "+tool, ite);
+            }
         }
-
         return tool;
     }
 
@@ -66,36 +89,34 @@ public class S2ServletToolInfo extends ServletToolInfo {
         return tool;
     }
 
-    /**
-     * If an instance of the tool cannot be created from
-     * the classname passed to this method, it will throw an exception.
-     *
-     * @param classname the fully qualified java.lang.Class of the tool
-     */
-    public void setClassname(String classname) throws Exception {
-        this.clazz = getApplicationClass(classname);
-        /* create an instance and see if it is initializable */
-        if (hasViewToolInterface(this.clazz)) {
-            this.initializable = true;
-        }
+    public void setKey(String key)
+    {
+        this.key = key;
     }
 
     /**
-     * コンストラクタに引数がある場合、S2コンテナを通してインスタンス生成
-     * するようにしたいため、Class#newInstance() を安易に使えない。
-     * そのため、以下のようにして ViewToolインタフェースの実装有無を確かめる
-     * 必要がある。
+     * If an instance of the tool cannot be created from
+     * the classname passed to this method, it will throw an exception.
+     * 
+     * @param classname the fully qualified java.lang.Class of the tool
      */
-    private boolean hasViewToolInterface(Class clazz)
-            throws InstantiationException, IllegalAccessException {
-        if (clazz == Object.class)
-            return false;
-
-        for (int i = 0; i < clazz.getInterfaces().length; i++)
-            if (clazz.getInterfaces()[i] == ViewTool.class)
-                return true;
-
-        return hasViewToolInterface(clazz.getSuperclass());
+    public void setClassname(String classname) throws Exception {
+        if (classname != null && classname.length() != 0)
+        {
+	    	this.clazz = getApplicationClass(classname);
+	    	
+            try
+            {
+                // try to get an init(Object) method
+                this.init = clazz.getMethod("init", new Class[]{ Object.class });
+            }
+            catch (NoSuchMethodException nsme)
+            {
+                // ignore
+            }
+        } else {
+        	this.clazz = null;
+        }
     }
 
     /**
@@ -111,10 +132,14 @@ public class S2ServletToolInfo extends ServletToolInfo {
         return loader.loadClass(name);
     }
 
-    /**
-     * Overrides {@link ViewToolInfo} to use clazz field here.
-     */
     public String getClassname() {
-        return clazz.getName();
+        return clazz != null ? clazz.getName() : null;
     }
+   
+
+    public String getKey()
+    {
+        return key;
+    }
+    
 }

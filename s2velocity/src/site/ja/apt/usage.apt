@@ -16,3 +16,16 @@ test
   ...
 </project>
 ------
+
+注意点
+  
+  以下の点で、Velocity-tools 1.3と非互換となります
+  
+  * parameterタグが使えません. toolbox.xmlで表記するのではなく S2Containerへのコンポーネント登録時に設定を追加してください
+  
+  TODO: toolbox.xmlの例と diconの例を載せたら親切
+
+拡張点
+  
+  * VelocityLayoutViewServletの "tools.view.servlet.error.template" が使えます (velocity.properties)
+  
