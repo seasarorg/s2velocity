@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
-	"http://www.seasar.org/dtd/components21.dtd">
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="toolbox">
-  <component class="org.seasar.velocity.tools.examples.hello.HelloImpl"/>
-  <component class="org.seasar.velocity.tools.examples.dao.ItemDAOImpl"/>
+	<component class="org.seasar.velocity.tools.examples.hello.HelloImpl"/>
+    <component class="org.seasar.velocity.tools.examples.dao.ItemDAOImpl"/>
+
+	<component name="sampleTool" instance="request" class="org.seasar.velocity.tools.examples.hello.SampleTool" />
+
+	<component name="itemTool" instance="request" class="org.seasar.velocity.tools.examples.dao.ItemTool" />
+
+	<component name="requestCountTool" instance="request" class="org.seasar.velocity.tools.examples.scope.CountTool" />
+	<component name="sessionCountTool" instance="session" class="org.seasar.velocity.tools.examples.scope.CountTool" />
+	<component name="appCountTool" instance="singleton" class="org.seasar.velocity.tools.examples.scope.CountTool" />
+	
+	<component name="appInitTool" instance="singleton" class="org.seasar.velocity.tools.examples.init.InitTool" />
+	<component name="sessionInitTool" instance="session" class="org.seasar.velocity.tools.examples.init.InitTool" />
+	<component name="requestInitTool" instance="request" class="org.seasar.velocity.tools.examples.init.InitTool" />
 </components>

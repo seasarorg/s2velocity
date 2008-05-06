@@ -13,4 +13,7 @@ public class SampleTool {
     return fHello.getHello();
   }
 
+  public String throwNullPointerException() {
+	  throw null;
+  }
 }

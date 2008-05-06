@@ -25,4 +25,21 @@
     <scope>application</scope>
   	<class>org.seasar.velocity.tools.examples.scope.CountTool</class>
   </tool>
+
+  <tool>
+  	<key>appInitTool</key>
+  	<scope>application</scope>
+  	<class>org.seasar.velocity.tools.examples.init.InitTool</class>
+  </tool>
+  <tool>
+  	<key>sessionInitTool</key>
+  	<scope>session</scope>
+  	<class>org.seasar.velocity.tools.examples.init.InitTool</class>
+  </tool>
+  <tool>
+  	<key>requestInitTool</key>
+  	<scope>request</scope>
+  	<class>org.seasar.velocity.tools.examples.init.InitTool</class>
+  </tool>
+  	
 </toolbox>

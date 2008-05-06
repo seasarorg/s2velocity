@@ -1,18 +1,21 @@
-/*********************************************************
- * PROJECT: s2velocity-example
- * Created on 2004/11/27, 14:32:13
- * 
- * Copyright (c) 2004 SATO TADAYOSI <sato@mogra.net>,
- * MOGRA DESIGN, Ltd.
- * all rights reserverd.
- * YOU'RE GONNA CARRY THAT WEIGHT...
- * 
- * $Id: CountTool.java,v 1.1 2004/11/27 06:38:45 sato Exp $
- *********************************************************/
+/*
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package org.seasar.velocity.tools.examples.scope;
 
 public class CountTool {
-
   private int count = 0;
 
   public int count() {

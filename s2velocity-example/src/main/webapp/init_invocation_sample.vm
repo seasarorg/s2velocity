@@ -1,0 +1,40 @@
+<html>
+<body>
+スコープによって tool のinit()にどのような引数が渡ってくるか、などを確認できます。<br />
+<br />
+<hr />
+<h1>applicationスコープ</h1>
+applicationスコープはcontainer管理によるツールボックスの定義の場合 "singleton"となります。<br />
+このとき、Velocity Tools 1.3のapplicationスコープの挙動とは異なり、init(ServletContext)は呼ばれないことに注意が必要です.<br />
+
+<ul>
+	<li>オブジェクト - $appInitTool
+	<li>init()の引数オブジェクトのtoString - $appInitTool.initData
+	<li>init()の引数データのclass - $appInitTool.initData.class
+	<li>invocationCount - $appInitTool.invocationCount
+	<li>lastInvocation - $appInitTool.lastInvocation
+</ul>
+<br />
+
+<h1>sessionスコープ</h1>
+<ul>
+	<li>オブジェクト - $sessionInitTool
+	<li>init()の引数オブジェクトのtoString - $sessionInitTool.initData
+	<li>init()の引数データのclass - $sessionInitTool.initData.class
+	<li>invocationCount - $sessionInitTool.invocationCount
+	<li>lastInvocation - $sessionInitTool.lastInvocation
+</ul>
+<br />
+
+<h1>requestスコープ</h1>
+<ul>
+	<li>オブジェクト - $requestInitTool
+	<li>init()の引数オブジェクトのtoString - $requestInitTool.initData
+	<li>init()の引数データのclass - $requestInitTool.initData.class
+	<li>invocationCount - $requestInitTool.invocationCount
+	<li>lastInvocation - $requestInitTool.lastInvocation
+</ul>
+<br />
+
+</body>
+</html>

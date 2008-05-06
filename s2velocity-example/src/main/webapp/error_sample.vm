@@ -1,0 +1,8 @@
+<html>
+<body>
+error_sample.vm<br />
+このテンプレートは途中でエラーが発生します。<Br />
+↓<br />
+$sampleTool.throwNullPointerException() <br />
+<br />
+ここまでくるとおかしい
