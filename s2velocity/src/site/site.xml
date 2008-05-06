@@ -19,22 +19,22 @@
 
 <project name="S2Velocity">
   <skin>
-    <groupId>org.seasar</groupId>
+    <groupId>org.seasar.project</groupId>
     <artifactId>seasar-skin</artifactId>
-    <version>1.0.0</version>
+    <version>0.1.1</version>
   </skin>
   <bannerRight>
     <src>images/seasar.gif</src>
   </bannerRight>
   <body>
     <links>
-      <item name="Velocity" href="http://jakarta.apache.org/velocity/"/>
+      <item name="Velocity" href="http://velocity.apache.org/" />
       <item name="Seasar" href="http://www.seasar.org/"/>
     </links>
 
-    <menu name="Overview">
-      <item name="Introduction" href="introduction.html"/>
-      <item name="Usage" href="usage.html"/>
+    <menu name="概要">
+      <item name="S2Velocityとは" href="introduction.html"/>
+      <item name="使い方" href="usage.html"/>
     </menu>
 
     ${reports}
