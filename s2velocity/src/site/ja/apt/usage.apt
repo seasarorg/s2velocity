@@ -25,6 +25,7 @@ Velocity Tools互換のXML形式による定義
   VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
   
   <<<web.xml>>>
+  
 +------+
 	<servlet>
 		<servlet-name>velocity</servlet-name>
@@ -45,6 +46,7 @@ Velocity Tools互換のXML形式による定義
   例えば、以下のようなXMLファイルを準備します
   
   <<<toolbox.xml>>>
+  
 +-------+
 <?xml version="1.0"?>
 <toolbox>
@@ -73,16 +75,15 @@ Velocity Tools互換のXML形式による定義
 
 S2Containerのネームスペースによる定義  
   
-  TBD
-  
-  は以下の設定を行う必要があります
-  
-  * <<<web.xml>>>の設定
+  この定義方法では、<<<'toolbox'>>>というnamespaceを持つコンテナに含まれるコンポーネントすべてがツールボックスとして扱われます.
+  このnamespaceを持つコンテナに含まれるすべてのコンポーネントは、リクエストごとにツールボックスにマッピングされ(getComponentされ)ます。
+  そのため、例えばdiconファイルによる柔軟なコンポーネント定義、プロパティの設定やライフサイクルの指定が行えることになります。
 
-*web.xmlの設定
-  
+  以下に、web.xmlの設定を示します.
   <<<S2ContainerServlet>>>の定義はそのままでかまいません。
   VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
+  
+  <<<web.xml>>>
   
 +------+
 	<servlet>
@@ -90,8 +91,7 @@ S2Containerのネームスペースによる定義
 		<servlet-class>org.seasar.velocity.tools.S2VelocityViewServlet</servlet-class>
 		<init-param>
 			<param-name>org.apache.velocity.toolbox</param-name>
-<!--			<param-value>container</param-value>  -->
-       		<param-value>/WEB-INF/velocity-toolbox.xml</param-value>
+			<param-value>container</param-value>
 		</init-param>
 		<init-param>
 			<param-name>org.apache.velocity.properties</param-name>
@@ -101,26 +101,35 @@ S2Containerのネームスペースによる定義
 	</servlet>
 +------+
 
-  上記の中で、コメントになっている部分があります。
-  <<<org.apache.velocity.toolbox>>>初期化パラメータに渡す値によって以下のように挙動が異なります。
+  上記のように、<<<org.apache.velocity.toolbox>>>パラメータに対して <<<container>>> を指定するのがポイントです。
   
-  * XMLファイル名を指定すると、Velocity Tools互換のXMLファイルによるツールボックス定義で動作します
+  実際に、diconファイルを書いてみましょう。以下の例では S2Containerのバージョンは2.4.xを仮定しています。
   
-  * <<<container>>> と指定すると、<<<'toolbox'>>>というnamespaceを持つコンテナに含まれるコンポーネントすべてがツールボックスとして扱われます
-  
-**XMLファイルによるツールボックス定義における注意点
-  
-  以下の点で、Velocity Tools 1.3と非互換となります
-  
-***parameterタグが使えない
+  <<<toolbox.dicon>>>
 
-  次バージョンで改善予定です。同様の設定が必要な場合は container を指定して S2Container管理で使えば可能です。
++------+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components namespace="toolbox">
+    <include path="all_services.dicon" />
 
-**S2Containerの'toolbox'ネームスペースによる定義における注意点
+	<component name="sampleTool" instance="request" class="org.seasar.velocity.tools.examples.hello.SampleTool" />
+	<component name="itemTool" instance="request" class="org.seasar.velocity.tools.examples.dao.ItemTool" />
+
+	<component name="requestCountTool" instance="request" class="org.seasar.velocity.tools.examples.scope.CountTool" />
+	<component name="sessionCountTool" instance="session" class="org.seasar.velocity.tools.examples.scope.CountTool" />
+	<component name="appCountTool" instance="singleton" class="org.seasar.velocity.tools.examples.scope.CountTool" />
+</components>
++------+
+
+  上記の例に加えて、例えばapp.diconの中でこのdiconファイルをincludeしておくことも必要です。
+  各コンポーネント定義の name の値がそのままVelocityでの参照名となります (たとえば $appCountTool となります)
   
-  * toolbox.xmlを使わないコンテナベース管理の場合には velocityTools標準の applicationスコープのようなinit挙動はしません
+  また、次の点で注意が必要です
   
-  TODO: toolbox.xmlの例と diconの例を載せたら親切
+  * Velocity Tools標準のXML定義における applicationスコープのようなinit挙動はしません.
+    (そのかわり、S2Containerの機能でServletContextは取得可能です)
 
 拡張点
   
