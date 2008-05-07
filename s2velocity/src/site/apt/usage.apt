@@ -1,5 +1,5 @@
  ----
-Usage
+使い方
  ----
 TANIGUCHI Hikaru
  -----
@@ -7,21 +7,51 @@ TANIGUCHI Hikaru
  -----
 
 使用方法
-
-  <<<web.xml>>>を次のように設定してください。
-
-
-------
-test
-  ...
-</project>
-------
-
-注意点
   
-  以下の点で、Velocity-tools 1.3と非互換となります
+  以下の説明では、読者は、S2Container、標準のVelocity(およびVelocity Tools)を正しく設定し、使うことが出来ているものと前提します。
   
-  * parameterタグが使えません. toolbox.xmlで表記するのではなく S2Containerへのコンポーネント登録時に設定を追加してください
+  S2Velocityを使うには以下の設定を行う必要があります
+  
+  * <<<web.xml>>>の設定
+
+*web.xmlの設定
+  
+  <<<S2ContainerServlet>>>の定義はそのままでかまいません。
+  VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
+  
++------+
+	<servlet>
+		<servlet-name>velocity</servlet-name>
+		<servlet-class>org.seasar.velocity.tools.S2VelocityViewServlet</servlet-class>
+		<init-param>
+			<param-name>org.apache.velocity.toolbox</param-name>
+<!--			<param-value>container</param-value>  -->
+       		<param-value>/WEB-INF/velocity-toolbox.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.apache.velocity.properties</param-name>
+			<param-value>/WEB-INF/velocity.properties</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
++------+
+
+  上記の中で、コメントになっている部分があります。
+  <<<org.apache.velocity.toolbox>>>初期化パラメータに渡す値によって以下のように挙動が異なります。
+  
+  * XMLファイル名を指定すると、Velocity Tools互換のXMLファイルによるツールボックス定義で動作します
+  
+  * <<<container>>> と指定すると、<<<'toolbox'>>>というnamespaceを持つコンテナに含まれるコンポーネントすべてがツールボックスとして扱われます
+  
+**XMLファイルによるツールボックス定義における注意点
+  
+  以下の点で、Velocity Tools 1.3と非互換となります
+  
+***parameterタグが使えない
+
+  次バージョンで改善予定です。同様の設定が必要な場合は container を指定して S2Container管理で使えば可能です。
+
+**S2Containerの'toolbox'ネームスペースによる定義における注意点
   
   * toolbox.xmlを使わないコンテナベース管理の場合には velocityTools標準の applicationスコープのようなinit挙動はしません
   
