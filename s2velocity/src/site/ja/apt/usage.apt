@@ -3,14 +3,79 @@
  ----
 TANIGUCHI Hikaru
  -----
-3 October 2006
+8 May 2008
  -----
 
 使用方法
   
   以下の説明では、読者は、S2Container、標準のVelocity(およびVelocity Tools)を正しく設定し、使うことが出来ているものと前提します。
   
-  S2Velocityを使うには以下の設定を行う必要があります
+  S2Velocityを使う際には、ツールボックスの定義方法を決定して、それに従う形で設定を行う必要があります.
+
+  * Velocity Tools互換のXML形式による定義
+  
+  * S2Containerのネームスペースによる定義
+
+Velocity Tools互換のXML形式による定義
+
+  この定義方法では、Velocity Toolsと同じ、XMLによるツールボックスの定義が使えます。
+  
+  以下に、web.xmlの設定を示します.
+  <<<S2ContainerServlet>>>の定義はそのままでかまいません。
+  VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
+  
+  <<<web.xml>>>
++------+
+	<servlet>
+		<servlet-name>velocity</servlet-name>
+		<servlet-class>org.seasar.velocity.tools.S2VelocityViewServlet</servlet-class>
+		<init-param>
+			<param-name>org.apache.velocity.toolbox</param-name>
+       		<param-value>/WEB-INF/toolbox.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.apache.velocity.properties</param-name>
+			<param-value>/WEB-INF/velocity.properties</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
++------+
+    
+  上記のweb.xmlの例では、<<</WEB-INF/toolbox.xml>>>が、ツールボックスの定義ファイルとなります。
+  例えば、以下のようなXMLファイルを準備します
+  
+  <<<toolbox.xml>>>
++-------+
+<?xml version="1.0"?>
+<toolbox>
+  <tool>
+    <key>sampleTool</key>
+    <scope>request</scope>
+    <class>org.seasar.velocity.tools.examples.hello.SampleTool</class>
+  </tool>
+  .
+  .
+</toolbox>
++-------+
+
+  詳細な説明は Velocity Tools のドキュメントを参照ください。
+  
+  * <<<key>>>に指定された名前が、Velocityでの参照名となります。上記の例では <<<$key>>> によって参照されます。
+  
+  * <<<scope>>>には <<<request>>>, <<<session>>>, <<<application>>> が指定できます。インスタンスのライフサイクルを定義します。
+  
+  * <<<class>>>には、ツールクラスのFQCNを記述します。
+  
+  なお、以下の点で、Velocity Tools 1.3と挙動が異なる(非互換となる)点に注意が必要です
+  
+  * parameterタグが使えない
+     次バージョンで改善予定です。同様の設定が必要な場合は container を指定して S2Container管理で使えば可能です。
+
+S2Containerのネームスペースによる定義  
+  
+  TBD
+  
+  は以下の設定を行う必要があります
   
   * <<<web.xml>>>の設定
 
