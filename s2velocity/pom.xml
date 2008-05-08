@@ -1,101 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.seasar.velocity</groupId>
-  <artifactId>s2-velocity</artifactId>
-  <packaging>jar</packaging>
-  <version>1.2-SNAPSHOT</version>
-  <description>Seasar2 Velocity extension</description>
-  <inceptionYear>2004</inceptionYear>
-  <developers>
-    <developer>
-      <id>sato</id>
-      <name>SATO, Tadayosi</name>
-      <email>sato@ouobpo.org</email>
-      <url>http://www.ouobpo.org/</url>
-      <organization>Ouobpo</organization>
-      <timezone>+9</timezone>
-    </developer>
-    <developer> 
-      <id>tanigon</id>
-      <name>TANIGUCHI, Hikaru</name>
-      <email>tanigon@tanigon.godhand.com</email>
-      <url>http://d.hatena.ne.jp/tanigon/</url>
-      <timezone>+9</timezone>
-    </developer>
-  </developers>
-  <licenses>
-    <license> 
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <organization>
-    <name>The Seasar Foundation</name>
-    <url>http://www.seasar.org/</url>
-  </organization>
-  <repositories>
-    <repository>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>http://maven.seasar.org/maven2</url>
-    </repository>
-  </repositories>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.seasar.velocity</groupId>
+	<artifactId>s2-velocity</artifactId>
+	<packaging>jar</packaging>
+	<version>1.2-SNAPSHOT</version>
+
+	<name>S2Velocity Project</name>
+	<description>Seasar2 Velocity Tools extension</description>
+	<url>http://s2velocity.sandbox.seasar.org/</url>
+	<inceptionYear>2004</inceptionYear>
+
+	<issueManagement>
+		<system>JIRA</system>
+		<url>https://www.seasar.org/issues/browse/VELOCITY</url>
+	</issueManagement>
+	<developers>
+		<developer>
+			<id>sato</id>
+			<name>SATO, Tadayosi</name>
+			<email>sato@ouobpo.org</email>
+			<url>http://www.ouobpo.org/</url>
+			<organization>Ouobpo</organization>
+			<timezone>+9</timezone>
+		</developer>
+		<developer>
+			<id>tanigon</id>
+			<name>TANIGUCHI, Hikaru</name>
+			<email>tanigon@tanigon.godhand.com</email>
+			<url>http://d.hatena.ne.jp/tanigon/</url>
+			<timezone>+9</timezone>
+		</developer>
+	</developers>
+
+	<mailingLists>
+		<mailingList>
+			<name>Seasar-user</name>
+			<subscribe>
+				http://lists.sourceforge.jp/mailman/listinfo/seasar-user
+			</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.jp/mailman/listinfo/seasar-user
+			</unsubscribe>
+			<post>seasar-user@lists.sourceforge.jp</post>
+			<archive>
+				http://lists.sourceforge.jp/mailman/archives/seasar-user/
+			</archive>
+		</mailingList>
+		<mailingList>
+			<name>Seasar-dev</name>
+			<subscribe>
+				http://lists.sourceforge.jp/mailman/listinfo/seasar-dev
+			</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.jp/mailman/listinfo/seasar-dev
+			</unsubscribe>
+			<post>seasar-dev@lists.sourceforge.jp</post>
+			<archive>
+				http://lists.sourceforge.jp/mailman/archives/seasar-dev/
+			</archive>
+		</mailingList>
+		<mailingList>
+			<name>Seasar-user-en</name>
+			<subscribe>
+				https://www.seasar.org/mailman/listinfo/seasar-user-en
+			</subscribe>
+			<unsubscribe>
+				https://www.seasar.org/mailman/listinfo/seasar-user-en
+			</unsubscribe>
+			<post>seasar-user-en@ml.seasar.org</post>
+			<archive>
+				http://ml.seasar.org/archives/seasar-user-en/
+			</archive>
+		</mailingList>
+	</mailingLists>
+	
+	<organization>
+		<name>The Seasar Foundation</name>
+		<url>http://www.seasar.org/</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</connection>
+		<developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</developerConnection>
+		<url>http://svn.seasar.org/browse/?root=sandbox.s2velocity</url>
+	</scm>
+
+	<repositories>
+		<repository>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>http://maven.seasar.org/maven2</url>
+		</repository>
+	</repositories>
   
-  <scm>
-    <connection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</connection>
-    <developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</developerConnection>
-    <url>http://svn.seasar.org/browse/?root=sandbox.s2velocity</url>  
-  </scm>
-  
-  
-  <build>
-  	<plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>  	
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <updateReleaseInfo>true</updateReleaseInfo>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>source-jar</id>
-            <phase>package</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+	<build>
+	<plugins>
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<source>1.5</source>
+				<target>1.5</target>
+				<encoding>UTF-8</encoding>
+			</configuration>
+		</plugin>
+		<plugin>
+			<artifactId>maven-deploy-plugin</artifactId>
+			<configuration>
+				<updateReleaseInfo>true</updateReleaseInfo>
+			</configuration>
+		</plugin>
+		<plugin>
+			<artifactId>maven-source-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>source-jar</id>
+					<phase>package</phase>
+					<goals>
+						<goal>jar</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
 		<plugin>
 			<artifactId>maven-site-plugin</artifactId>
 			<version>2.0-beta-6</version>
 			<configuration>
 				<outputEncoding>UTF-8</outputEncoding>
 				<inputEncoding>UTF-8</inputEncoding>
-				<locales>ja,en</locales>
+				<locales>en,ja</locales>
 			</configuration>
-		</plugin>      
+		</plugin>
+		<plugin>
+			<artifactId>maven-javadoc-plugin</artifactId>
+			<configuration>
+				<source>1.5</source>
+				<encoding>UTF-8</encoding>
+				<docencoding>UTF-8</docencoding>
+				<charset>UTF-8</charset>
+				<links>
+					<link>http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/ </link>
+					<!-- TODO:  tools 1.3 javadoc link -->
+				</links>
+			</configuration>
+			<executions>
+				<execution>
+					<id>javadoc-jar</id>
+					<phase>package</phase>
+					<goals>
+						<goal>jar</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+			
+		<plugin>
+			<artifactId>maven-antrun-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>ant-dist</id>
+					<phase>site</phase>
+					<configuration>
+						<tasks>
+							<ant antfile="build.xml" target="fix-site">
+								<property name="ver" value="${version}" />
+							</ant>
+						</tasks>
+					</configuration>
+					<goals>
+						<goal>run</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
 	</plugins>
-    <extensions>
-     <extension>
-       <groupId>org.apache.maven.wagon</groupId>
-       <artifactId>wagon-webdav</artifactId>
-       <version>1.0-beta-2</version>
-     </extension>
-   </extensions>
-  </build>
+	<extensions>
+		<extension>
+			<groupId>org.apache.maven.wagon</groupId>
+			<artifactId>wagon-webdav</artifactId>
+			<version>1.0-beta-2</version>
+		</extension>
+	</extensions>
+</build>
   
  <distributionManagement>
    <repository>
@@ -110,10 +204,10 @@
      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
      <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
    </snapshotRepository>
-   <site>
-     <id>www.seasar.org</id>
-     <url>scp://www.seasar.org/home/groups/s2velocity/public_html</url>
-   </site>   
+    <site>
+      <id>maven.seasar.org</id>
+      <url>dav:https://www.seasar.org/site/sandbox/s2velocity/</url>
+    </site>
  </distributionManagement>
  
   <dependencies>
@@ -122,18 +216,6 @@
       <artifactId>geronimo-servlet_2.4_spec</artifactId>
       <version>1.0</version>
     </dependency>
-<!--
-    <dependency>
-      <groupId>commons-digester</groupId>
-      <artifactId>commons-digester</artifactId>
-      <version>1.7</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging-api</artifactId>
-      <version>1.0.4</version>
-    </dependency>
-    -->
     <dependency>
       <groupId>velocity</groupId>
       <artifactId>velocity</artifactId>
@@ -150,4 +232,25 @@
       <version>2.3.23</version>
     </dependency>
   </dependencies>
+  
+  	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<encoding>UTF-8</encoding>
+					<docencoding>UTF-8</docencoding>
+					<charset>UTF-8</charset>
+					<links>
+						<link>
+							http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/
+						</link>
+						<!--  TODO: velocity tools 1.3 javadoc -->
+					</links>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+  
 </project>
