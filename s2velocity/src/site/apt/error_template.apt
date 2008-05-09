@@ -1,0 +1,75 @@
+ ----
+エラー処理
+ ----
+TANIGUCHI Hikaru
+ -----
+9 May 2008
+ -----
+
+S2Velocityによるエラー処理の拡張
+  
+  Velocity Toolsで提供されている2種類のServletは、それぞれエラー処理の自由度が異なります。
+  
+  * <<<VelocityViewServlet>>> では、テンプレート処理中にエラーが発生した場合はServlet内部でエラーメッセージが生成されます
+  
+  * <<<VelocityLayoutViewServlet>>> では、テンプレート処理中にエラーが発生した場合は、エラー発生時のスタックトレースなどを属性にセットした上で、
+    任意のテンプレートをレンダリングし、それをエラーメッセージとして表示できます
+    
+  レイアウト管理などを必要としないシンプルなユースケースでは<<<VelocityViewServlet>>>で充分なのですが、エラーメッセージが開発者にしかわからない難解な
+  ものになってしまうのでは困ります。
+  
+  そこで、S2Velocityでは、<<<VelocityLayoutViewServlet>>>のエラーハンドリングの部分だけをそっくり使えるようにしてあります。
+
+使い方
+
+* <<<web.xml>>>の設定
+
+  設定は<<<velocity.properties>>>で行います。プロパティファイルの場所の指定は<<<web.xml>>>で行っています。
+
+  <<web.xml>>
+  
++--------+
+	<servlet>
+		<servlet-name>velocity</servlet-name>
+		<servlet-class>org.seasar.velocity.tools.S2VelocityViewServlet</servlet-class>
+		.
+		.
+		.
+		<init-param>
+			<param-name>org.apache.velocity.properties</param-name>
+			<param-value>/WEB-INF/velocity.properties</param-value>
+		</init-param>
+	</servlet>
++--------+
+
+  上記の例では、<</WEB-INF/velocity.properties>>がVelocityのプロパティを指定するファイルとなります。
+        
+* <<<velocity.properties>>>の設定
+
+  velocity.propertiesに、以下の行を追加します。
+  
++--------+
+tools.view.servlet.error.template=error.vm
++--------+  
+  
+  上記の例では <<error.vm>>がエラー発生時に処理されるテンプレートとなります。
+  
+* <<<error.vm>>>の記述
+
+  error.vmは他のテンプレートファイルと同様ですから、HTMLを書く要領で記述すると良いでしょう。あるビューを処理中に例外が発生してエラー画面にレンダリング制御が移ってきた場合には、
+  エラーが発生した元のテンプレートのレンダリングも途中まで完了していることに注意が必要です。たとえば、<<<$response>>>を使ってヘッダのセットやリダイレクトなどは行えない可能性があります。
+  
+  このエラー発生時に処理されるテンプレートは、以下の属性がセットされてからレンダリングされます。
+  
+  * <<<$error_cause>>>\
+    エラーの発生原因です。例外オブジェクトが格納されています。
+  
+  * <<<$stack_trace>>>\
+    上記<<<$error_cause>>>発生時のスタックトレースが文字列として格納されています。
+    
+  * <<<$invocation_exception>>>\
+    エラーが発生した原因が、<<<MethodInvocationException>>>である場合には、その例外オブジェクトがそのままセットされています。
+    このとき、<<<$error_cause>>>には、<<<MethodInvocationException>>>がラッピングしている例外が取り出されて格納されます。
+
+
+      
