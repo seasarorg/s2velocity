@@ -33,8 +33,9 @@
     </links>
 
     <menu name="概要">
-      <item name="S2Velocityとは" href="introduction.html"/>
+      <item name="S2Velocityとは" href="index.html"/>
       <item name="使い方" href="usage.html"/>
+      <item name="エラー処理" href="error_template.html"/>
     </menu>
 
     ${reports}

@@ -8,15 +8,23 @@ TANIGUCHI Hikaru
 
 使用方法
   
-  以下の説明では、読者は、S2Container、標準のVelocity(およびVelocity Tools)を正しく設定し、使うことが出来ているものと前提します。
+  このドキュメントでは、読者はS2Container、Velocity、Velocity Toolsを正しく設定し、VelocityテンプレートをWebアプリケーションのビュー層として使うことが出来ているものと前提において説明します。
   
-  S2Velocityを使う際には、ツールボックスの定義方法を決定して、それに従う形で設定を行う必要があります.
-
-  * Velocity Tools互換のXML形式による定義
+  ツールボックスとは、簡単に言ってしまえばテンプレートがレンダリングする際に自動的に属性にセットされている一連のインスタンス群のことです。ツールボックスを定義する、とは簡単に言ってしまうと、各ツールについて以下の3点を明らかにすることです。
   
-  * S2Containerのネームスペースによる定義
+  * マッピングする属性名 
+  
+  * ツールのクラス
+  
+  * ツールのインスタンスのライフサイクル
+  
+  S2Velocityを使う際には、以下の2つのツールボックスの定義方法のうち、どちらを使うかを決定し、それに従う形で設定を行う必要があります.
 
-Velocity Tools互換のXML形式による定義
+  * {{Velocity-Tools互換のXML形式による定義}}
+  
+  * {{S2Containerのネームスペースによる定義}}
+
+{Velocity-Tools互換のXML形式による定義}
 
   この定義方法では、Velocity Toolsと同じ、XMLによるツールボックスの定義が使えます。
   
@@ -24,7 +32,7 @@ Velocity Tools互換のXML形式による定義
   <<<S2ContainerServlet>>>の定義はそのままでかまいません。
   VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
   
-  <<<web.xml>>>
+  <<web.xml>>
   
 +------+
 	<servlet>
@@ -45,7 +53,7 @@ Velocity Tools互換のXML形式による定義
   上記のweb.xmlの例では、<<</WEB-INF/toolbox.xml>>>が、ツールボックスの定義ファイルとなります。
   例えば、以下のようなXMLファイルを準備します
   
-  <<<toolbox.xml>>>
+  <<toolbox.xml>>
   
 +-------+
 <?xml version="1.0"?>
@@ -70,10 +78,10 @@ Velocity Tools互換のXML形式による定義
   
   なお、以下の点で、Velocity Tools 1.3と挙動が異なる(非互換となる)点に注意が必要です
   
-  * parameterタグが使えない
+  * parameterタグが使えない\
      次バージョンで改善予定です。同様の設定が必要な場合は container を指定して S2Container管理で使えば可能です。
 
-S2Containerのネームスペースによる定義  
+{S2Containerのネームスペースによる定義}  
   
   この定義方法では、<<<'toolbox'>>>というnamespaceを持つコンテナに含まれるコンポーネントすべてがツールボックスとして扱われます.
   このnamespaceを持つコンテナに含まれるすべてのコンポーネントは、リクエストごとにツールボックスにマッピングされ(getComponentされ)ます。
@@ -83,7 +91,7 @@ S2Containerのネームスペースによる定義
   <<<S2ContainerServlet>>>の定義はそのままでかまいません。
   VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
   
-  <<<web.xml>>>
+  <<web.xml>>
   
 +------+
 	<servlet>
@@ -105,7 +113,7 @@ S2Containerのネームスペースによる定義
   
   実際に、diconファイルを書いてみましょう。以下の例では S2Containerのバージョンは2.4.xを仮定しています。
   
-  <<<toolbox.dicon>>>
+  <<toolbox.dicon>>
 
 +------+
 <?xml version="1.0" encoding="UTF-8"?>
