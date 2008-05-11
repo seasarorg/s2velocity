@@ -1,34 +1,36 @@
  -----
-S2Velocityとは
+S2Velocity
  -----
 TANIGUCHI Hikaru
  -----
 7 May 2008
  -----
 
-S2Velocityとは
+What is S2Velocity
 
-  簡単に言ってしまうと、Velocity Toolsのツールボックスのインスタンス管理をVelocity ToolsではなくS2Containerに任せるためのライブラリです。
+  First of all, S2Velocity is an extension of Velocity Tools, in order to managing toolbox instance with S2Container(Seasar2).
   
-  Webアプリケーションで、Velocityをビュー層のテンプレートエンジンとして用いるとき、ビューヘルパー(ViewHelper)パターンを使うのが一般的です。
-  Velocity Tools プロジェクトで提供されるStrutsLinkToolやDateToolなどは大変便利ですが、これらビューヘルパー(ツール)を自作する場合に、
-  ビューヘルパーのインスタンス管理がVelocity側に握られていて問題になることがあります。
+  In web application with Velocity and Velocity Tools, typically, some view helper classes are used and they are called "toolbox".
+  Of course toolbox classes are not only Velocity Tools built-in, but also developer can use any POJO classes as toolbox.
+  However, Velocity Tools manages life-cycle of their instances, so that some POJO classes which need to work with other classes 
+  assumed to be given in dependency-injection way, it is hard to manage the dependencies with Velocity Tools.
   
-  たとえば、ツールボックスに何かをinjectionしたい場合や、Service層を呼び出したい場合などに、
-  自分でgetComponent()するなどする必要があるのです。こうなると、そのソースコードはS2Containerに依存してしまうため
-  テスタビリティや保守性、再利用性が下がってしまいます。
+  For example, a POJO class must have interactions with service/dao layer class so that  
+  the POJO class must have a reference to a instance of depending class.
+  Velocity Tools is not a dependency injection container so user cannot inject a class outside the POJO class.
+
+  S2Velocity replaces instance management of Velocity Tools with S2Container.
+  S2Velocity can make web application being consistent about instance management.
   
-  そこで、S2Velocityです。ツールボックスでも、S2Containerの提供する柔軟なコンポーネント定義、アプリケーション全体で一貫したインスタンス管理を実現できます。
+Two ways of definition
   
-2つの利用形態
+  S2Velocity supports two ways to define a toolbox.
   
-  S2Velocityでは2種類のツールボックス定義方法をサポートしています。
+  * by (Velocity Tools compatible) XML
   
-  * Velocity Tools互換のXML形式による定義方法
+  * by S2Container namespace
   
-  * ツールボックスをすべてS2Containerのネームスペースを使って管理する定義方法
-  
-  詳細は{{{usage.html}使い方}}をご覧ください
+  See {{{usage.html}usage}} for more details.
   
 準拠しているバージョン
   
