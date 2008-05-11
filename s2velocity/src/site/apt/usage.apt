@@ -22,9 +22,9 @@ Usage
   
   When using S2Velocity, users have to choose either of following two ways of definiton, of toolbox.
 
-  * {{Velocity-Tools compatible XML way}}
+  * {{{Velocity-Tools_compatible_XML_way}Velocity-Tools compatible XML way}}
   
-  * {{S2Container namespace way}}
+  * {{{S2Container_namespace_way}S2Container namespace way}}
 
 {Velocity-Tools compatible XML way}
 
