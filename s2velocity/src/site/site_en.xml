@@ -32,9 +32,9 @@
       <item name="Seasar" href="http://www.seasar.org/"/>
     </links>
 
-    <menu name="概要">
-      <item name="S2Velocityとは" href="index.html"/>
-      <item name="使い方" href="usage.html"/>
+    <menu name="S2Velocity">
+      <item name="Introduction" href="index.html"/>
+      <item name="Usage" href="usage.html"/>
       <item name="Error handling" href="error_template.html"/>
     </menu>
 

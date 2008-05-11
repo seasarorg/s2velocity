@@ -139,7 +139,3 @@ TANIGUCHI Hikaru
   * Velocity Tools標準のXML定義における applicationスコープのようなinit挙動はしません.
     (そのかわり、S2Containerの機能でServletContextは取得可能です)
 
-拡張点
-  
-  * VelocityLayoutViewServletの "tools.view.servlet.error.template" が使えます (velocity.properties)
-  

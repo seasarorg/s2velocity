@@ -1,36 +1,39 @@
  ----
-使い方
+Usage
  ----
 TANIGUCHI Hikaru
  -----
 8 May 2008
  -----
 
-使用方法
+Usage
   
-  このドキュメントでは、読者はS2Container、Velocity、Velocity Toolsを正しく設定し、VelocityテンプレートをWebアプリケーションのビュー層として使うことが出来ているものと前提において説明します。
-  
-  ツールボックスとは、簡単に言ってしまえばテンプレートがレンダリングする際に自動的に属性にセットされている一連のインスタンス群のことです。ツールボックスを定義する、とは簡単に言ってしまうと、各ツールについて以下の3点を明らかにすることです。
-  
-  * マッピングする属性名 
-  
-  * ツールのクラス
-  
-  * ツールのインスタンスのライフサイクル
-  
-  S2Velocityを使う際には、以下の2つのツールボックスの定義方法のうち、どちらを使うかを決定し、それに従う形で設定を行う必要があります.
+  In this document, it is supposed that users can configurate and use S2Container, Velocity, Velocity Tools properly, and
+  Velocity template can be a part of view layer in user's web application already.
 
-  * {{Velocity-Tools互換のXML形式による定義}}
+  First of all, toolbox is a set of attributes referring some instance before rendering a Velocity template, so to speak.
+  So, defining a toolbox is as well as defining following 3 points.
   
-  * {{S2Containerのネームスペースによる定義}}
-
-{Velocity-Tools互換のXML形式による定義}
-
-  この定義方法では、Velocity Toolsと同じ、XMLによるツールボックスの定義が使えます。
+  * a name of attribute/reference in Velocity template 
   
-  以下に、web.xmlの設定を示します.
-  <<<S2ContainerServlet>>>の定義はそのままでかまいません。
-  VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
+  * class of a tool
+  
+  * life-cycle of a tool instance
+  
+  When using S2Velocity, users have to choose either of following two ways of definiton, of toolbox.
+
+  * {{Velocity-Tools compatible XML way}}
+  
+  * {{S2Container namespace way}}
+
+{Velocity-Tools compatible XML way}
+
+  In this case, users can use XML file as well as regular Velocity Tools.
+  
+  Configuration of web.xml are following:
+  
+  Note that a definition of <<<S2ContainerServlet>>> is not to be changed,
+  only a change needed is from VelocityViewServlet to S2VelocityViewServlet.
   
   <<web.xml>>
   
@@ -50,8 +53,9 @@ TANIGUCHI Hikaru
 	</servlet>
 +------+
     
-  上記のweb.xmlの例では、<<</WEB-INF/toolbox.xml>>>が、ツールボックスの定義ファイルとなります。
-  例えば、以下のようなXMLファイルを準備します
+  As an example shown above, <<</WEB-INF/toolbox.xml>>> is toolbox definition file.
+  
+  Then, prepare XML file such as following:
   
   <<toolbox.xml>>
   
@@ -68,28 +72,30 @@ TANIGUCHI Hikaru
 </toolbox>
 +-------+
 
-  詳細な説明は Velocity Tools のドキュメントを参照ください。
+  See Velocity Tools document for more details about this XML notation.
   
-  * <<<key>>>に指定された名前が、Velocityでの参照名となります。上記の例では <<<$key>>> によって参照されます。
+  * <<<key>>> describes name of reference in Velocity template. As an example above it is <<<$key>>> within Velocity template.
   
-  * <<<scope>>>には <<<request>>>, <<<session>>>, <<<application>>> が指定できます。インスタンスのライフサイクルを定義します。
+  * <<<scope>>> must be one of <<<request>>>, <<<session>>>, <<<application>>>. it describes a life-cycle of a tool instance.
   
-  * <<<class>>>には、ツールクラスのFQCNを記述します。
-  
-  なお、以下の点で、Velocity Tools 1.3と挙動が異なる(非互換となる)点に注意が必要です
-  
-  * parameterタグが使えない\
-     次バージョンで改善予定です。同様の設定が必要な場合は container を指定して S2Container管理で使えば可能です。
+  * <<<class>>> describes FQCN class name for tool class.
 
-{S2Containerのネームスペースによる定義}  
+  Please note that there is incompatible behavior in S2Velocity than Velocity Tools 1.3.
   
-  この定義方法では、<<<'toolbox'>>>というnamespaceを持つコンテナに含まれるコンポーネントすべてがツールボックスとして扱われます.
-  このnamespaceを持つコンテナに含まれるすべてのコンポーネントは、リクエストごとにツールボックスにマッピングされ(getComponentされ)ます。
-  そのため、例えばdiconファイルによる柔軟なコンポーネント定義、プロパティの設定やライフサイクルの指定が行えることになります。
+  * <<<parameter>>> tag cannot be used\
+     It'll be fixed in next version of S2Velocity. 
+     If you want same functionality with Velocity Tools, it can be help to use S2Container namespace based configuration.
 
-  以下に、web.xmlの設定を示します.
-  <<<S2ContainerServlet>>>の定義はそのままでかまいません。
-  VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
+{S2Container namespace way}  
+  
+  In this case, all of components defined in a container having <<<'toolbox'>>> namespace, are used as toolbox.
+  All components of that container will be set to attributes by S2Velocity in each request,
+  so, flexible definition of properties, life-cycle, for components can be used with toolbox.
+
+  Configuration of web.xml are following:
+
+  Note that a definition of <<<S2ContainerServlet>>> is not to be changed,
+  only a change needed is from VelocityViewServlet to S2VelocityViewServlet.
   
   <<web.xml>>
   
@@ -109,9 +115,10 @@ TANIGUCHI Hikaru
 	</servlet>
 +------+
 
-  上記のように、<<<org.apache.velocity.toolbox>>>パラメータに対して <<<container>>> を指定するのがポイントです。
-  
-  実際に、diconファイルを書いてみましょう。以下の例では S2Containerのバージョンは2.4.xを仮定しています。
+  As shown above, <<<org.apache.velocity.toolbox>>> init-param having <<<container>>> is the point.
+
+  For example, a .dicon file is shown below.
+  This dicon guesses that the version of S2Container is 2.4.x.
   
   <<toolbox.dicon>>
 
@@ -131,15 +138,12 @@ TANIGUCHI Hikaru
 </components>
 +------+
 
-  上記の例に加えて、例えばapp.diconの中でこのdiconファイルをincludeしておくことも必要です。
-  各コンポーネント定義の name の値がそのままVelocityでの参照名となります (たとえば $appCountTool となります)
+  In addition to this example, (such as) app.dicon must have <<<include>>> tag references this file.
+  Each component definition has <<<name>>> attribute and the value will be reference name in 
+  Velocity template (such as $appCountTool)
   
-  また、次の点で注意が必要です
+  Please note that:
   
-  * Velocity Tools標準のXML定義における applicationスコープのようなinit挙動はしません.
-    (そのかわり、S2Containerの機能でServletContextは取得可能です)
+  * Incompatible "init" behavior with Velocity Tools (and application scoped toolbox)
+    (Instead, S2Container can inject <<<ServletContext>>> in other ways.)
 
-拡張点
-  
-  * VelocityLayoutViewServletの "tools.view.servlet.error.template" が使えます (velocity.properties)
-  

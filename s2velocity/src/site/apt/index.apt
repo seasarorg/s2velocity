@@ -32,14 +32,13 @@ Two ways of definition
   
   See {{{usage.html}usage}} for more details.
   
-準拠しているバージョン
+Prerequisite for using S2Velocity
   
   * Velocity(Core) 1.5
   
   * Velocity-tools 1.3
   
-  * S2Container は 2.3.23 および 2.4.25 での動作を確認
+  * S2Container 2.3.23 or 2.4.25
   
-  * J2SE 1.5以降
-  
+  * J2SE 1.5 or later
   
