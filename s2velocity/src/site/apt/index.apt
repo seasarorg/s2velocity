@@ -8,7 +8,7 @@ TANIGUCHI Hikaru
 
 What is S2Velocity
 
-  First of all, S2Velocity is an extension of Velocity Tools, in order to managing toolbox instance with S2Container(Seasar2).
+  First of all, S2Velocity is an extension of Velocity Tools, in order to manage toolbox instance with S2Container(Seasar2).
   
   In web application with Velocity and Velocity Tools, typically, some view helper classes are used and they are called "toolbox".
   Of course toolbox classes are not only Velocity Tools built-in, but also developer can use any POJO classes as toolbox.
@@ -16,7 +16,7 @@ What is S2Velocity
   assumed to be given in dependency-injection way, it is hard to manage the dependencies with Velocity Tools.
   
   For example, a POJO class must have interactions with service/dao layer class so that  
-  the POJO class must have a reference to a instance of depending class.
+  the POJO class have a reference to a instance of depending class.
   Velocity Tools is not a dependency injection container so user cannot inject a class outside the POJO class.
 
   S2Velocity replaces instance management of Velocity Tools with S2Container.
@@ -29,6 +29,8 @@ Two ways of definition
   * by (Velocity Tools compatible) XML
   
   * by S2Container namespace
+  
+  []
   
   See {{{usage.html}usage}} for more details.
   

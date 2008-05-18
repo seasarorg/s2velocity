@@ -18,6 +18,8 @@ TANIGUCHI Hikaru
   
   * ツールのインスタンスのライフサイクル
   
+  []
+  
   S2Velocityを使う際には、以下の2つのツールボックスの定義方法のうち、どちらを使うかを決定し、それに従う形で設定を行う必要があります.
 
   * {{Velocity-Tools互換のXML形式による定義}}
@@ -70,11 +72,13 @@ TANIGUCHI Hikaru
 
   詳細な説明は Velocity Tools のドキュメントを参照ください。
   
-  * <<<key>>>に指定された名前が、Velocityでの参照名となります。上記の例では <<<$key>>> によって参照されます。
+  * <<<key>>>に指定された名前が、Velocityでの参照名となります。上記の例では <<<$sampleTool>>> によって参照されます。
   
   * <<<scope>>>には <<<request>>>, <<<session>>>, <<<application>>> が指定できます。インスタンスのライフサイクルを定義します。
   
   * <<<class>>>には、ツールクラスのFQCNを記述します。
+  
+  []
   
   なお、以下の点で、Velocity Tools 1.3と挙動が異なる(非互換となる)点に注意が必要です
   
@@ -87,7 +91,7 @@ TANIGUCHI Hikaru
   このnamespaceを持つコンテナに含まれるすべてのコンポーネントは、リクエストごとにツールボックスにマッピングされ(getComponentされ)ます。
   そのため、例えばdiconファイルによる柔軟なコンポーネント定義、プロパティの設定やライフサイクルの指定が行えることになります。
 
-  以下に、web.xmlの設定を示します.
+  以下に、web.xmlの設定を示します。
   <<<S2ContainerServlet>>>の定義はそのままでかまいません。
   VelocityViewServletをS2Velocityのものに差し替えるため、以下のような内容を設定します。
   
@@ -134,8 +138,8 @@ TANIGUCHI Hikaru
   上記の例に加えて、例えばapp.diconの中でこのdiconファイルをincludeしておくことも必要です。
   各コンポーネント定義の name の値がそのままVelocityでの参照名となります (たとえば $appCountTool となります)
   
-  また、次の点で注意が必要です
+  また、次の点で注意が必要です。
   
-  * Velocity Tools標準のXML定義における applicationスコープのようなinit挙動はしません.
+  * Velocity Tools標準のXML定義における applicationスコープのようなinit挙動はしません。
     (そのかわり、S2Containerの機能でServletContextは取得可能です)
 
