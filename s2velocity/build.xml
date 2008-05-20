@@ -12,13 +12,11 @@
 
 	<target name="dist">
 		<mkdir dir="${zip.dest}"/>
-		<zip zipfile="${zipDir}/s2velocity-${version}.zip">
+		<zip zipfile="${zip.dest}/s2velocity-${version}.zip">
 			<zipfileset prefix="s2velocity" dir=".">
 				<exclude name="**/build/**"/>
 				<exclude name="**/target/**"/>
-				<exclude name="**/site/**"/>
-				<exclude name="dbf/**"/>
-				<exclude name="src/**"/>
+				<exclude name="**/target-eclipse/**"/>
 			</zipfileset>
 			<zipfileset prefix="s2velocity/lib" dir="./target">
 				<include name="s2-velocity-${version}.jar"/>

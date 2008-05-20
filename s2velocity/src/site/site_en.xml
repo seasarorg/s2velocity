@@ -34,6 +34,7 @@
 
     <menu name="S2Velocity">
       <item name="Introduction" href="index.html"/>
+      <item name="Download" href="download.html"/>      
       <item name="Usage" href="usage.html"/>
       <item name="Error handling" href="error_template.html"/>
     </menu>
