@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="s2velocity" default="fix-site">
 
-    <property name="version" value="1.1" />
+    <property name="version" value="1.2" />
 
     <property name="build.src" value="src/main/java" />
     <property name="build.dest" value="target/classes" />
     <property name="build.jar" value="s2-velocity-${version}.jar" />
 	<property name="site" value="target/site/" />
 	
-    <target name="jar">
-        <jar jarfile="${build.jar}" basedir="${build.dest}" />
-    </target>
+	<property name="zip.dest" value="target"/>
+
+	<target name="dist">
+		<mkdir dir="${zip.dest}"/>
+		<zip zipfile="${zipDir}/s2velocity-${version}.zip">
+			<zipfileset prefix="s2velocity" dir=".">
+				<exclude name="**/build/**"/>
+				<exclude name="**/target/**"/>
+				<exclude name="**/site/**"/>
+				<exclude name="dbf/**"/>
+				<exclude name="src/**"/>
+			</zipfileset>
+			<zipfileset prefix="s2velocity/lib" dir="./target">
+				<include name="s2-velocity-${version}.jar"/>
+				<include name="s2-velocity-${version}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="s2velocity/doc" dir="./target/site">
+				<exclude name="**/download/**"/>
+				<exclude name="**/*.zip"/>
+			</zipfileset>
+		</zip>
+	</target>
 
 	<target name="fix-site">
 		<mkdir dir="${site}/en"/>
