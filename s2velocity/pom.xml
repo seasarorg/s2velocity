@@ -3,7 +3,7 @@
 	<groupId>org.seasar.velocity</groupId>
 	<artifactId>s2-velocity</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2</version>
+	<version>1.3-SNAPSHOT</version>
 
 	<name>S2Velocity Project</name>
 	<description>Seasar2 Velocity Tools extension</description>
@@ -88,9 +88,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/tags/s2-velocity-1.2</connection>
-		<developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/tags/s2-velocity-1.2</developerConnection>
-		<url>http://svn.seasar.org/browse/?root=sandbox.s2velocity/tags/s2-velocity-1.2?root=sandbox.s2velocity</url>
+		<connection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</connection>
+		<developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</developerConnection>
+		<url>http://svn.seasar.org/browse/?root=sandbox.s2velocity</url>
 	</scm>
 
 	<repositories>
