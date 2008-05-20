@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.seasar.velocity</groupId>
 	<artifactId>s2-velocity</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 
 	<name>S2Velocity Project</name>
 	<description>Seasar2 Velocity Tools extension</description>
@@ -89,9 +88,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</connection>
-		<developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/trunk/s2velocity/</developerConnection>
-		<url>http://svn.seasar.org/browse/?root=sandbox.s2velocity</url>
+		<connection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/tags/s2-velocity-1.2</connection>
+		<developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2velocity/tags/s2-velocity-1.2</developerConnection>
+		<url>http://svn.seasar.org/browse/?root=sandbox.s2velocity/tags/s2-velocity-1.2?root=sandbox.s2velocity</url>
 	</scm>
 
 	<repositories>
