@@ -45,19 +45,26 @@ public class AutoRegisteringS2ServletToolInfo extends S2ServletToolInfo {
 
         S2Container container = SingletonS2ContainerFactory.getContainer();
         String compName = COMPONENT_NAME_PREFIX + getKey();
-        try {
+        try { 
             if (!container.hasComponentDef(compName)) {
-                // NOTE ツールのコンテナへの登録。toolbox.xmlのスコープを有効にするため、ツールはすべてprototypeとして管理される。
-                ComponentDef compDef = new ComponentDefImpl(clazz, compName);
-
-                /*
-                 * Velocity View がスコープ毎に適切にgetInstanceメソッドを呼び出しているので、
-                 * S2側では、すべてprototypeにしてしまってよいはず。
-                 * TODO request, sessionのインスタンス管理を指定したら上手くいかなかった。要調査。
-                 */
-                compDef.setInstanceDef(InstanceDefFactory.getInstanceDef(InstanceDef.PROTOTYPE_NAME));
-
-                container.register(compDef);
+            	synchronized (AutoRegisteringS2ServletToolInfo.class) {
+            		/*
+            		 * 未解決コンポーネントへの初回のアクセスが集中した場合に二重登録となってしまうため回避
+            		 * hasComponentDef==falseのケースは全体としてみると少ないケースなので1枚中でsynchronizedしている
+            		 */
+                    if (!container.hasComponentDef(compName)) {
+		                // NOTE ツールのコンテナへの登録。toolbox.xmlのスコープを有効にするため、ツールはすべてprototypeとして管理される。
+		                ComponentDef compDef = new ComponentDefImpl(clazz, compName);
+		
+		                /*
+		                 * Velocity View がスコープ毎に適切にgetInstanceメソッドを呼び出しているので、
+		                 * S2側では、すべてprototypeにしてしまってよいはず。
+		                 */
+		                compDef.setInstanceDef(InstanceDefFactory.getInstanceDef(InstanceDef.PROTOTYPE_NAME));
+		
+		                container.register(compDef);
+                    }
+            	}
             }
             tool = container.getComponent(compName);
         } catch (Exception e) {
