@@ -10,6 +10,16 @@ TANIGUCHI Hikaru
 
 *{最新のリリース}
 
+** S2Velocity 1.2.1 (2008-05-27)
+
+  * {{{https://www.seasar.org/issues/secure/ReleaseNote.jspa?version=10719&styleName=Html&projectId=10040}リリースノート}}
+
+  * {{{http://s2velocity.sandbox.seasar.org/en/download/s2velocity-1.2.1.zip}S2Velocity-1.2.1 ダウンロード}}
+
+  * s2-velocity-exampleには変更点はありません
+  
+*{過去のリリース}
+
 ** S2Velocity 1.2 (2008-05-20)
 
   * {{{https://www.seasar.org/issues/secure/ReleaseNote.jspa?projectId=10040&styleName=Html&version=10011}リリースノート}}

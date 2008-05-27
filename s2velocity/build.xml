@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="s2velocity" default="fix-site">
 
-    <property name="version" value="1.2" />
+    <property name="version" value="1.2.1" />
 
     <property name="build.src" value="src/main/java" />
     <property name="build.dest" value="target/classes" />
@@ -17,6 +17,7 @@
 				<exclude name="**/build/**"/>
 				<exclude name="**/target/**"/>
 				<exclude name="**/target-eclipse/**"/>
+				<exclude name="**/src/site/resources/download/**"/>				
 			</zipfileset>
 			<zipfileset prefix="s2velocity/lib" dir="./target">
 				<include name="s2-velocity-${version}.jar"/>
