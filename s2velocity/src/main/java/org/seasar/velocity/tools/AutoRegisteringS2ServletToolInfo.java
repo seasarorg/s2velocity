@@ -47,19 +47,17 @@ public class AutoRegisteringS2ServletToolInfo extends S2ServletToolInfo {
         String compName = COMPONENT_NAME_PREFIX + getKey();
         try { 
             if (!container.hasComponentDef(compName)) {
-            	synchronized (AutoRegisteringS2ServletToolInfo.class) {
+            	synchronized (this) {
             		/*
             		 * 未解決コンポーネントへの初回のアクセスが集中した場合に二重登録となってしまうため回避
             		 * hasComponentDef==falseのケースは全体としてみると少ないケースなので1枚中でsynchronizedしている
             		 */
                     if (!container.hasComponentDef(compName)) {
-		                // NOTE ツールのコンテナへの登録。toolbox.xmlのスコープを有効にするため、ツールはすべてprototypeとして管理される。
-		                ComponentDef compDef = new ComponentDefImpl(clazz, compName);
-		
 		                /*
 		                 * Velocity View がスコープ毎に適切にgetInstanceメソッドを呼び出しているので、
-		                 * S2側では、すべてprototypeにしてしまってよいはず。
+		                 * S2側では、すべてprototypeにしてしまっている.
 		                 */
+                    	ComponentDef compDef = new ComponentDefImpl(clazz, compName);
 		                compDef.setInstanceDef(InstanceDefFactory.getInstanceDef(InstanceDef.PROTOTYPE_NAME));
 		
 		                container.register(compDef);
